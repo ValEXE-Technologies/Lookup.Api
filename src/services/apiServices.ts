@@ -5,13 +5,12 @@ import { DomainServices } from 'valexe.lookup.services/src';
 import { ResponseModel } from './models';
 
 export class ApiServices {
-    private domainServices: DomainServices = null;
+    private readonly domainServices: DomainServices = null;
 
-    public async init(
+    constructor(
         headLess: boolean = true
     ) {
-        this.domainServices = new DomainServices();
-        await this.domainServices.init(headLess);
+        this.domainServices = new DomainServices(headLess);
     }
     
     public getListener(): RequestListener {

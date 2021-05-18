@@ -6,12 +6,9 @@ export class HttpServer {
     public getServer(
         headLess: boolean = true
     ): https.Server {
-        let apiServices = new ApiServices();
-        apiServices.init(headLess);
-
         return https.createServer(
             this.getServerOptions(),
-            apiServices.getListener());
+            new ApiServices(headLess).getListener());
     }
 
     private getServerOptions(): https.ServerOptions {
