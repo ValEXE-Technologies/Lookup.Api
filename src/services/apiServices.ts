@@ -5,7 +5,14 @@ import { DomainServices } from 'valexe.lookup.services/src';
 import { ResponseModel } from './models';
 
 export class ApiServices {
-    private domainServices = new DomainServices();
+    private domainServices: DomainServices = null;
+
+    public async init(
+        headLess: boolean = true
+    ) {
+        this.domainServices = new DomainServices();
+        await this.domainServices.init(headLess);
+    }
     
     public getListener(): RequestListener {
         let app: Application = express();

@@ -3,10 +3,15 @@ import * as fs from 'fs';
 import { ApiServices } from './services/apiServices';
 
 export class HttpServer {
-    public getServer(): https.Server {
+    public getServer(
+        headLess: boolean = true
+    ): https.Server {
+        let apiServices = new ApiServices();
+        apiServices.init(headLess);
+
         return https.createServer(
             this.getServerOptions(),
-            new ApiServices().getListener());
+            apiServices.getListener());
     }
 
     private getServerOptions(): https.ServerOptions {
