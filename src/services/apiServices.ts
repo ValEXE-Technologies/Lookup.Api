@@ -3,7 +3,10 @@ import { Application } from 'express';
 import { RequestListener } from 'http';
 import * as cors from 'cors';
 
-import { DomainServices } from 'lookup.services/src';
+import {
+    DomainServices,
+    Registrar
+} from 'lookup.services/src';
 import { ResponseViewModel } from './models';
 
 export class ApiServices {
@@ -34,6 +37,7 @@ export class ApiServices {
 
         // Domain Related APIs
         this.attachGetDomainIsAvailable(app);
+        this.attachGetRegistrars(app);
     }
 
     private attachGetStatusApi(app: Application) {
@@ -52,14 +56,28 @@ export class ApiServices {
         app.get('/api/domain/isAvailable/:domainNameWithTLD', async (req, res) => {
             let domainNameWithTLD = req.params.domainNameWithTLD;
             let isDomainAvailable = await this.domainServices.isDomainAvailable(domainNameWithTLD);
-            let apiResponseModel: ResponseViewModel<boolean> = {
+            let apiResponse: ResponseViewModel<boolean> = {
                     status: 'Successful',
                     message: isDomainAvailable ? `${domainNameWithTLD} is available` : `${domainNameWithTLD} is not available`,
                     data: isDomainAvailable
                 };
         
             res.setHeader('content-type', 'application/json');
-            res.json(apiResponseModel);
+            res.json(apiResponse);
+        });
+    }
+
+    private attachGetRegistrars(app: Application) {
+        app.get('/api/domain/registrars', async (_, res) => {
+            let registrars = await this.domainServices.supportedDomains();
+            let apiResponse: ResponseViewModel<Registrar[]> = {
+                    status: 'Successful',
+                    message: null,
+                    data: registrars
+                };
+        
+            res.setHeader('content-type', 'application/json');
+            res.json(apiResponse);
         });
     }
 };
