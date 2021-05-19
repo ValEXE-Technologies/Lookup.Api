@@ -1,5 +1,5 @@
 {
-    "name": "valexe.lookup.api",
+    "name": "lookup.api",
     "version": "1.0.0",
     "description": "REST API for Lookup",
     "main": "index.js",
@@ -12,12 +12,13 @@
     "devDependencies": {
         "@types/express": "^4.17.11",
         "@types/node": "^15.3.0",
+        "cors": "^2.8.5",
         "nodemon": "^2.0.7",
         "ts-node": "^9.1.1",
         "typescript": "^4.2.4"
     },
     "dependencies": {
         "express": "^4.17.1",
-        "valexe.lookup.services": "file:../ValEXE.Lookup.Services"
+        "lookup.services": "file:../Lookup.Services"
     }
 }

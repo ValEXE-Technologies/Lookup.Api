@@ -1,2 +1,2 @@
-# ValEXE.Lookup.Api
+# Lookup.Api
 REST API for Lookup

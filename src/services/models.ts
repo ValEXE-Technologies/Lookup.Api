@@ -1,5 +1,5 @@
-export type ResponseModel<T> = {
+export type ResponseViewModel<TModel> = {
     status: string,
     message: string,
-    data: T
+    data: TModel
 };
