@@ -4,6 +4,7 @@ import { RequestListener } from 'http';
 import * as cors from 'cors';
 
 import {
+    DomainPrice,
     DomainServices,
     Registrar
 } from 'lookup.services/src';
@@ -36,8 +37,9 @@ export class ApiServices {
         this.attachGetStatusApi(app);
 
         // Domain Related APIs
-        this.attachGetDomainIsAvailable(app);
         this.attachGetRegistrars(app);
+        this.attachGetDomainIsAvailable(app);
+        this.attachGetDomainPrice(app);
     }
 
     private attachGetStatusApi(app: Application) {
@@ -49,6 +51,20 @@ export class ApiServices {
             };
         
             res.json(responseModel);
+        });
+    }
+
+    private attachGetRegistrars(app: Application) {
+        app.get('/api/domain/registrars', async (_, res) => {
+            let registrars = await this.domainServices.supportedDomains();
+            let apiResponse: ResponseViewModel<Registrar[]> = {
+                    status: 'Successful',
+                    message: null,
+                    data: registrars
+                };
+        
+            res.setHeader('content-type', 'application/json');
+            res.json(apiResponse);
         });
     }
 
@@ -67,14 +83,17 @@ export class ApiServices {
         });
     }
 
-    private attachGetRegistrars(app: Application) {
-        app.get('/api/domain/registrars', async (_, res) => {
-            let registrars = await this.domainServices.supportedDomains();
-            let apiResponse: ResponseViewModel<Registrar[]> = {
-                    status: 'Successful',
-                    message: null,
-                    data: registrars
-                };
+    private attachGetDomainPrice(app: Application) {
+        app.get('/api/domain/price/:currency/:registrar/:domainNameWithTLD', async (req, res) => {
+            let currency = req.params.currency;
+            let registrar = req.params.registrar;
+            let domainNameWithTLD = req.params.domainNameWithTLD;
+            let domainPrice = await this.domainServices.domainPrice(registrar, domainNameWithTLD, currency);
+            let apiResponse: ResponseViewModel<DomainPrice> = {
+                status: (domainPrice == null) ? 'Failed' : 'Successful',
+                message: null,
+                data: domainPrice
+            };
         
             res.setHeader('content-type', 'application/json');
             res.json(apiResponse);
