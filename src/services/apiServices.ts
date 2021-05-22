@@ -6,7 +6,9 @@ import * as cors from 'cors';
 import {
     DomainPrice,
     DomainServices,
-    Registrar
+    Registrar,
+    Currency,
+    SUPPORTED_CURRENCIES
 } from 'lookup.services/src';
 import { ResponseViewModel } from './models';
 
@@ -37,6 +39,7 @@ export class ApiServices {
         this.attachGetStatusApi(app);
 
         // Domain Related APIs
+        this.attachGetCurrencies(app);
         this.attachGetRegistrars(app);
         this.attachGetDomainIsAvailable(app);
         this.attachGetDomainPrice(app);
@@ -51,6 +54,19 @@ export class ApiServices {
             };
         
             res.json(responseModel);
+        });
+    }
+
+    private attachGetCurrencies(app: Application) {
+        app.get('/api/referencedata/currencies', async (_, res) => {
+            let apiResponse: ResponseViewModel<Currency[]> = {
+                    status: 'Successful',
+                    message: null,
+                    data: SUPPORTED_CURRENCIES
+                };
+        
+            res.setHeader('content-type', 'application/json');
+            res.json(apiResponse);
         });
     }
 
