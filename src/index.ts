@@ -2,7 +2,7 @@ import { CONFIG } from './config';
 import { HttpServer } from './httpServer';
 
 new HttpServer()
-    .getServer(false)
+    .getServer()
     .listen(
         CONFIG.portNumber,
         () => {
