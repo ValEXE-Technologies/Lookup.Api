@@ -71,8 +71,9 @@ export class ApiServices {
     }
 
     private attachGetRegistrars(app: Application) {
-        app.get('/api/domain/registrars', async (_, res) => {
-            let registrars = await this.domainServices.supportedDomains();
+        app.get('/api/domain/:currency/registrars', async (req, res) => {
+            let currency = req.params.currency;
+            let registrars = await this.domainServices.domainRegistrarsByCurrency(currency);
             let apiResponse: ResponseViewModel<Registrar[]> = {
                     status: 'Successful',
                     message: null,
@@ -100,7 +101,7 @@ export class ApiServices {
     }
 
     private attachGetDomainPrice(app: Application) {
-        app.get('/api/domain/price/:currency/:registrar/:domainNameWithTLD', async (req, res) => {
+        app.get('/api/domain/:currency/:registrar/:domainNameWithTLD/price', async (req, res) => {
             let currency = req.params.currency;
             let registrar = req.params.registrar;
             let domainNameWithTLD = req.params.domainNameWithTLD;
