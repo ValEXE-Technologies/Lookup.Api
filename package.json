@@ -19,6 +19,6 @@
     },
     "dependencies": {
         "express": "^4.17.1",
-        "lookup.services": "file:../Lookup.Services"
+        "lookup.services": "^1.0.0"
     }
 }
