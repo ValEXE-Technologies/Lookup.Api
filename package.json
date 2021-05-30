@@ -3,6 +3,10 @@
     "version": "1.0.0",
     "description": "REST API for Lookup",
     "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ValEXE-Technologies/Lookup.Api"
+    },
     "scripts": {
         "start": "nodemon ./src/index.ts",
         "build": "tsc -p ."
