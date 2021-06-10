@@ -1,7 +1,7 @@
-import * as express from 'express';
+import express, { RequestHandler } from 'express';
+import cors from 'cors';
 import { Application } from 'express';
 import { RequestListener } from 'http';
-import * as cors from 'cors';
 
 import {
     DomainPrice,
@@ -9,16 +9,20 @@ import {
     Registrar,
     Currency,
     SUPPORTED_CURRENCIES
-} from 'lookup.services/src';
+} from '@valexe-technologies/lookup.services';
 import { ResponseViewModel } from './models';
 
 export class ApiServices {
     private readonly domainServices: DomainServices = null;
 
-    constructor(
+    constructor() {
+        this.domainServices = new DomainServices();
+    }
+
+    public async init(
         headLess: boolean = true
     ) {
-        this.domainServices = new DomainServices(headLess);
+        await this.domainServices.init(headLess);
     }
     
     public getListener(): RequestListener {
@@ -31,7 +35,8 @@ export class ApiServices {
     }
 
     private config(app: Application) {
-        app.use(express.json());
+        app.use(express.urlencoded({ extended: true }) as RequestHandler);
+        app.use(express.json() as RequestHandler);
         app.use(cors());
     }
 
@@ -49,10 +54,10 @@ export class ApiServices {
         app.get('/api/status', (_, res) => {
             let responseModel: ResponseViewModel<string> = {
                 status: 'Successful',
-                message: 'Lookup API is up and running',
+                message: 'Lookup RESTApi is up and running',
                 data: null
             };
-        
+            
             res.json(responseModel);
         });
     }

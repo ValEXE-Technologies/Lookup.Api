@@ -3,9 +3,14 @@ import { HttpServer } from './httpServer';
 
 new HttpServer()
     .getServer()
-    .listen(
-        CONFIG.portNumber,
-        () => {
-            console.log(`Lookup APi listening at https://localhost:${CONFIG.portNumber}`);
-        }
-    );
+        .then((instance) => {
+            instance.listen(
+                CONFIG.portNumber,
+                () => {
+                    console.log(`Lookup RESTApi listening at https://localhost:${CONFIG.portNumber}`);
+                }
+            );
+        })
+        .catch((err) => {
+            console.error(err)
+        });

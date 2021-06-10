@@ -1,14 +1,18 @@
-import * as https from 'https';
-import * as fs from 'fs';
+import https from 'https';
+import fs from 'fs';
 import { ApiServices } from './services/apiServices';
 
 export class HttpServer {
-    public getServer(
+    
+    public async getServer(
         headLess: boolean = true
-    ): https.Server {
+    ): Promise<https.Server> {
+        let apiServices: ApiServices = new ApiServices();
+        await apiServices.init(headLess);
+
         return https.createServer(
             this.getServerOptions(),
-            new ApiServices(headLess).getListener());
+            apiServices.getListener());
     }
 
     private getServerOptions(): https.ServerOptions {
