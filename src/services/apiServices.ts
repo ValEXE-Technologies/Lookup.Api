@@ -38,6 +38,7 @@ export class ApiServices {
         app.use(express.urlencoded({ extended: true }) as RequestHandler);
         app.use(express.json() as RequestHandler);
         app.use(cors());
+        app.use(express.static('wwwroot') as RequestHandler);
     }
 
     private attachApis(app: Application) {
