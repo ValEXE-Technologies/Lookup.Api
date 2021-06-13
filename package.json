@@ -1,5 +1,5 @@
 {
-    "name": "lookup.api",
+    "name": "@valexe-technologies/lookup.api",
     "version": "1.0.0",
     "description": "RESTApi for Lookup",
     "type": "commonjs",
