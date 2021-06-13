@@ -1,21 +1,35 @@
 {
     "name": "lookup.api",
     "version": "1.0.0",
-    "description": "REST API for Lookup",
-    "main": "index.js",
+    "description": "RESTApi for Lookup",
+    "type": "commonjs",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "homepage": "https://github.com/ValEXE-Technologies/Lookup.Api",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://github.com/ValEXE-Technologies/Lookup.Api"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/ValEXE-Technologies/Lookup.Api"
     },
+    "bugs": {
+        "url": "https://github.com/ValEXE-Technologies/Lookup.Api/issues"
+    },
     "scripts": {
         "start": "nodemon ./src/index.ts",
-        "build": "tsc"
+        "build": "tsc",
+        "publish-lib": "npm run build && npm publish",
+        "publish-lib-beta": "npm run build && npm publish --tag beta"
     },
     "author": "Indrajeet Valera",
     "license": "ISC",
     "devDependencies": {
-        "@types/express": "^4.17.12",
-        "@types/node": "^15.6.1",
+        "@types/node": "^15.12.2",
         "cors": "^2.8.5",
         "nodemon": "^2.0.7",
         "ts-node": "^9.1.1",
